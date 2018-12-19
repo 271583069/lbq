@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.tinzel.mybatis.mapper.UsersMapper">
+	<resultMap type="java.util.HashMap" id="userMap">  
+       <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>  
+       <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+       <result column="userpwd" property="userpwd" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+       <result column="age" property="age" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+    </resultMap>  
+    <select id="query" statementType="CALLABLE" resultMap="userMap">
+    	{call query()}
+    </select>
+    <parameterMap type="java.util.Map" id="saveUsers">
+		<parameter property="username" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="userpwd" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="age" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="save" statementType="CALLABLE" parameterMap="saveUsers" useGeneratedKeys="false">
+		{call saveusers(?,?,?)}
+	</insert>
+	 <parameterMap type="java.util.Map" id="delUsers">
+		<parameter property="id" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<delete id="del" statementType="CALLABLE" parameterMap="delUsers">
+		{call delusers(?)}
+	</delete>
+	
+	<resultMap type="edu.tinzel.mybatis.entity.Users" id="getoneUserss"> 
+	  <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>  
+		 <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+       <result column="userpwd" property="userpwd" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+       <result column="age" property="age" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+        </resultMap> 
+     <parameterMap type="java.util.Map" id="getoneUsers">
+		<parameter property="id" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap> 
+	<select id="getone" statementType="CALLABLE" parameterMap="getoneUsers" resultMap="getoneUserss">
+		{call getoneusers(?)}
+	</select>
+	
+	<resultMap type="edu.tinzel.mybatis.entity.Users" id="dlUsers"> 
+	  <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>  
+		 <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+       <result column="userpwd" property="userpwd" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+       <result column="age" property="age" javaType="java.lang.String" jdbcType="VARCHAR"/>  
+        </resultMap> 
+     <parameterMap type="java.util.Map" id="dlUserss">
+		<parameter property="username" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="userpwd" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap> 
+	<select id="dl" statementType="CALLABLE" parameterMap="dlUserss" resultMap="dlUsers">
+		{call dlusers(?,?)}
+	</select>
+	
+	 <parameterMap type="java.util.Map" id="qm">
+		<parameter property="username" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="minage" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="maxage" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap> 
+	<select id="queryByName" statementType="CALLABLE" resultMap="dlUsers" parameterMap="qm">
+		{call querybyname(?,?,?)}
+	</select>
+	
+	
+     <parameterMap type="java.util.Map" id="updateUsers">	
+		<parameter property="username" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="userpwd" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="age" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="id" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap> 
+	<update id="update" statementType="CALLABLE" parameterMap="updateUsers" >
+		{call updateusers(?,?,?,?)}
+	</update>
+	
+
+</mapper>
